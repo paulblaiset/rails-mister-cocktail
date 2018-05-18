@@ -1,0 +1,30 @@
+<div class="banner-show" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= @cocktail.img_url %>);">
+  <div class="container">
+    <h1 class="text-white"><%= @cocktail.name %> <%= link_to "<i class='fas fa-trash-alt'></i>".html_safe, cocktail_path(@cocktail.id), method: :delete %></h1>
+    <p class="text-white">
+      <% if @in_update == false %>
+      <%= @cocktail.description %> <%= link_to '<i class="fas fa-edit"></i>'.html_safe, "#", method: :patch %>
+    </p>
+    <% else %>
+      <%= render '/cocktails/form_edit' %>
+    <% end %>
+  </div>
+</div>
+<div class="container card-details-parent">
+  <div class="card-details">
+    <div class="add-dose">
+      <h2>Ingredients</h2>
+      <% @cocktail.doses.each  do |dose| %>
+        <p>
+          <strong><%= dose.ingredient.name %></strong>
+          &nbsp;-&nbsp;
+          <%= dose.description %>
+          &nbsp;-&nbsp;
+          <%= link_to "<i class='fas fa-trash-alt'></i>".html_safe, dose_path(dose.id), method: :delete %>
+        </p>
+      <% end %>
+      <%= render '/doses/form' %>
+    </div>
+  </div>
+  <%= link_to "Back", cocktails_path %>
+</div>
